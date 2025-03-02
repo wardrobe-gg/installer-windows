@@ -16,7 +16,7 @@
             <Label x:Name="TitleBarMainLabel" Content="WARDROBE INSTALLER" Style="{DynamicResource titleLabel}" Margin="8,2,648,0"/>
             <Button Content="&#xE711;" Style="{DynamicResource windowButton}" Margin="773,0,0,0" Click="CloseButton_Click" HorizontalAlignment="Left" Width="24" Height="24"/>
         </Grid>
-        <Border x:Name="LauncherSelectFrame" Style="{DynamicResource frame}" Visibility="Collapsed" Margin="64,32,64,0" Grid.RowSpan="3">
+        <Border x:Name="LauncherSelectFrame" Style="{DynamicResource frame}" Visibility="Visible" Margin="64,32,64,0" Grid.RowSpan="3">
             <Grid>
                 <TextBlock x:Name="LauncherSelectLabel" Style="{DynamicResource frameLabel}" Margin="0,46,220,299" FontSize="32">
                 Where do you want to
@@ -69,7 +69,7 @@
                 </Button>
             </Grid>
         </Border>
-        <Border x:Name="FinalizeInstallation" Style="{DynamicResource frame}" Visibility="Visible" Margin="64,32,64,0" Grid.RowSpan="3">
+        <Border x:Name="FinalizeInstallation" Style="{DynamicResource frame}" Visibility="Collapsed" Margin="64,32,64,0" Grid.RowSpan="3">
             <Grid>
                 <TextBlock x:Name="FinalizeLabel" Visibility="Visible" Style="{DynamicResource frameLabel}" Margin="0,46,220,276" FontSize="32">
                     Wardrobe was
