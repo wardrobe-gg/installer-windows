@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Wardrobe Installer")]
 [assembly: AssemblyDescription("Installer for Wardrobe.gg")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Wardrobe.gg")]
+[assembly: AssemblyCompany("Wardrobe.gg Ltd")]
 [assembly: AssemblyProduct("Wardrobe")]
 [assembly: AssemblyCopyright("Copyright © Wardrobe.gg 2025")]
 [assembly: AssemblyTrademark("")]
