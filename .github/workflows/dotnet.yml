@@ -51,6 +51,7 @@ jobs:
         run: echo "tag_name=$(date +'%Y-%m-%d-%H%M%S')" >> $GITHUB_ENV
 
       - name: Create GitHub Release
+        id: create_release # Add an ID to reference outputs
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
