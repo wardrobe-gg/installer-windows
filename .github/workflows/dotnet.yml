@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4.6.1
         with:
           name: "Installer"
-          path: "bin/Release/*.exe"
+          path: "bin/Release/Installer.zip" # Upload the .zip file
 
   release:
     needs: build
@@ -46,12 +46,15 @@ jobs:
         with:
           name: "Installer"
 
+      - name: Extract Artifact
+        run: unzip Installer.zip -d extracted
+
       - name: Get Current Date and Time
         id: datetime
         run: echo "tag_name=$(date +'%Y-%m-%d-%H%M%S')" >> $GITHUB_ENV
 
       - name: Create GitHub Release
-        id: create_release # Add an ID to reference outputs
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,6 +71,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "bin/Release/*.exe"
-          asset_name: "Installer.exe"
+          asset_path: "extracted/Wardrobe Installer.exe" # Path to the extracted .exe file
+          asset_name: "Wardrobe Installer.exe"
           asset_content_type: application/octet-stream
