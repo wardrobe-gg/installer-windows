@@ -47,9 +47,9 @@
                     <LineBreak/>
                     <LineBreak/>
                     <TextBlock Margin="10,0,0,0" Foreground="#FFF96C6D">
-                        • Optifine only supports static capes and cosmetics, <Run FontWeight="Bold">NO ANIMATION</Run>
+                        •  Optifine only supports static capes and cosmetics, <Run FontWeight="Bold">NO ANIMATION</Run>
                         <LineBreak/>
-                        • Cosmetics are only supported above version 1.14 and don't work with some clients
+                        •  Cosmetics are only supported above version 1.14 and don't work with some clients
                     </TextBlock>
                     <LineBreak/>
                     <LineBreak/>
@@ -61,11 +61,11 @@
                     
                     <Run Foreground="#8D9096">For a detailed compatibility list, head over to </Run> <Run Foreground="#8D9096" TextDecorations="Underline" Cursor="Hand" MouseDown="FAQLink_MouseDown">www.wardrobe.gg/faq</Run>
                 </TextBlock>
-                <Button x:Name="InstallOptifineButton" Margin="0,330,457,0" Style="{DynamicResource installButton}" VerticalAlignment="Top" Width="279" Height="34" Click="InstallOptifineButton_Click">
-                    <Label Foreground="White" Margin="0,2,0,0">Install</Label>
+                <Button x:Name="InstallOptifineButton" Margin="0,330,457,0" Style="{DynamicResource installButton}" FontSize="17" VerticalAlignment="Top" Width="279" Height="34" Click="InstallOptifineButton_Click">
+                    Install
                 </Button>
-                <Button x:Name="UninstallOptifineButton" Margin="0,330,163,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="UninstallOptifineButton_Click">
-                    <Label Foreground="White" Margin="0,2,0,0">Uninstall</Label>
+                <Button x:Name="UninstallOptifineButton" Margin="0,330,163,0" Style="{DynamicResource secondaryButton}" FontSize="17" VerticalAlignment="Top" Width="279" Height="34" Click="UninstallOptifineButton_Click">
+                    Uninstall
                 </Button>
             </Grid>
         </Border>
@@ -93,14 +93,14 @@
                     on our Discord Server.
                 </TextBlock>
                 <Button x:Name="CloseInstallerButton" Margin="0,295,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="CloseButton_Click">
-                    <Label Foreground="White" Margin="0,4,0,0" FontSize="13">Close Installer</Label>
+                    <Label Foreground="White" Margin="0,3,0,0" FontSize="14">Close Installer</Label>
                 </Button>
                 <!--<Button x:Name="InstallAnotherVersionButton" Margin="0,324,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34">
                     <Label Foreground="White" Margin="0,4,0,0" FontSize="13" Content="Install another version"/>
                 </Button-->
                 <Image Margin="284,0,-57,19" Source="/Assets/Images/flying-person-render.png" Stretch="Fill"/>
                 <Button x:Name="InstallAnotherButton" Margin="0,334,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="InstallAnotherButton_Click">
-                    <Label Foreground="White" Margin="0,4,0,0" FontSize="13" Content="Install another version"/>
+                    <Label Foreground="White" Margin="0,3,0,0" FontSize="14" Content="Install another version"/>
                 </Button>
 
             </Grid>

@@ -29,7 +29,7 @@ namespace WardrobeInstaller
         public MainWindow()
         {
             Directory.CreateDirectory(LOG_DIRECTORY);
-            File.WriteAllText(LOG_DIRECTORY + "\\latest.log", "Wardrobe Installer Logs");
+            File.WriteAllText(LOG_DIRECTORY + "\\latest.log", "-- Wardrobe Installer Logs --\n\n");
             if (!IsUserAdministrator())
             {
                 using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
@@ -127,6 +127,10 @@ namespace WardrobeInstaller
         {
             if (!IsWardrobeInstalled())
             {
+                using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+                {
+                    logs.WriteLine("User attempted to uninstall Wardrobe for Optifine, but it's not present (hosts entry missing).");
+                }
                 //MessageBox.Show("Wardrobe is not installed on your system.", "Wardrobe Installer", MessageBoxButton.OK, MessageBoxImage.Warning);
                 ConfigureOptifine.Visibility = Visibility.Collapsed;
                 FinalizeLabel.Text = "Operation\r\nCancelled";
@@ -315,6 +319,10 @@ namespace WardrobeInstaller
                     var hostsFileContent = File.ReadAllLines(HOSTS_FILEPATH);
                     var filteredLines = hostsFileContent.Where(line => !line.Contains(HOSTS_INSERT));
                     File.WriteAllText(HOSTS_FILEPATH, String.Join("\n", filteredLines).Trim() + "\n");
+                    using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+                    {
+                        logs.WriteLine("Wardrobe for Optifine was successfully uninstalled.");
+                    }
                     return;
                 default:
                     MessageBox.Show("Unknown uninstallation location encountered. Please contact Wardrobe Support for more help.", "Wardrobe Installer", MessageBoxButton.OK, MessageBoxImage.Error);
