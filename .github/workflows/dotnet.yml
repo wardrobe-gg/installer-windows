@@ -1,4 +1,4 @@
-# This workflow will build a .NET project
+# This workflow will build a .NET project and create a GitHub release
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: Build Installer
@@ -11,29 +11,52 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-2019
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
-    
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+      - uses: actions/checkout@v4
       
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1.1
-    
-    - name: Restore Packages
-      run: nuget restore WardrobeInstaller.sln
-    
-    - name: Build solution
-      run: msbuild WardrobeInstaller.sln -t:rebuild -property:Configuration=Release
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+      
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+      
+      - name: Restore Packages
+        run: nuget restore WardrobeInstaller.sln
+      
+      - name: Build solution
+        run: msbuild WardrobeInstaller.sln -t:rebuild -property:Configuration=Release
 
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.6.1
-      with:
-        name: "Installer"
-        path: "bin/Release/*.exe"
-      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          name: "Installer"
+          path: "bin/Release/*.exe"
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: "Installer"
+          path: "installer-files"
+
+      - name: Get Current Date and Time
+        id: datetime
+        run: echo "tag_name=$(date +'%Y-%m-%d-%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.datetime.outputs.tag_name }}
+          name: "Release ${{ steps.datetime.outputs.tag_name }}"
+          body: "This release was created on ${{ steps.datetime.outputs.tag_name }}."
+          draft: false
+          prerelease: false
+          files: installer-files/*.exe
