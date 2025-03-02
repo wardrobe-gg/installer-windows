@@ -51,6 +51,10 @@ namespace WardrobeInstaller
 
         private async void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+            {
+                logs.WriteLine("Exiting...");
+            }
             Environment.Exit(0);
         }
 
@@ -58,6 +62,10 @@ namespace WardrobeInstaller
         {
             LauncherSelectFrame.Visibility = Visibility.Collapsed;
             ConfigureOptifine.Visibility = Visibility.Visible;
+            using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+            {
+                logs.WriteLine("Optifine installation selected");
+            }
         }
 
         private void ConfigureOptifineReturnArrow_MouseDown(object sender, MouseButtonEventArgs e)
@@ -82,7 +90,7 @@ namespace WardrobeInstaller
                 //MessageBox.Show("You already have Wardrobe for OptiFine installed!", "Wardrobe Installer", MessageBoxButton.OK, MessageBoxImage.Information);
                 ConfigureOptifine.Visibility = Visibility.Collapsed;
                 FinalizeLabel.Text = "Installation\r\nCancelled";
-                FinalizeErrorMessage.Text = "Wardrobe was already installed on\r\nyour system!";
+                FinalizeErrorMessage.Text = "Wardrobe is already installed on\r\nyour system!";
                 FinalizeErrorMessage.Visibility = Visibility.Visible;
                 FinalizeInstallation.Visibility = Visibility.Visible;
                 return;
@@ -115,6 +123,61 @@ namespace WardrobeInstaller
             ConfigureOptifine.Visibility = Visibility.Collapsed;
             FinalizeInstallation.Visibility = Visibility.Visible;
         }
+        private void UninstallOptifineButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsWardrobeInstalled())
+            {
+                //MessageBox.Show("Wardrobe is not installed on your system.", "Wardrobe Installer", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ConfigureOptifine.Visibility = Visibility.Collapsed;
+                FinalizeLabel.Text = "Operation\r\nCancelled";
+                FinalizeErrorMessage.Text = "Wardrobe was not found on\r\nyour system!";
+                FinalizeErrorMessage.Visibility = Visibility.Visible;
+                FinalizeInstallation.Visibility = Visibility.Visible;
+                return;
+            }
+            try
+            {
+                UninstallWardrobe(1);
+            }
+            catch (Exception ex)
+            {
+                using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+                {
+                    logs.WriteLine("Something went wrong when installing Wardrobe for Optifine!");
+                    logs.Write(ex + "\n");
+                }
+                ConfigureOptifine.Visibility = Visibility.Collapsed;
+                // Change labels to error before showing Panel
+                FinalizeLabel.Visibility = Visibility.Hidden;
+                FinalizeFailLabel.Visibility = Visibility.Visible;
+                // FinalizeErrorMessage.Visibility = Visibility.Visible;
+                // Show Finalization page
+                FinalizeInstallation.Visibility = Visibility.Visible;
+                return;
+            }
+            ConfigureOptifine.Visibility = Visibility.Collapsed;
+            FinalizeLabel.Text = "Wardrobe was\r\nuninstalled\r\nsuccessfully!";
+            FinalizeInstallation.Visibility = Visibility.Visible;
+            return;
+
+        }
+
+        private void InstallAnotherButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+            {
+                logs.WriteLine("User chose to install another version.");
+            }
+            FinalizeInstallation.Visibility = Visibility.Collapsed;
+            // Resetting the Finalize page to defaults
+            FinalizeFailLabel.Visibility = Visibility.Hidden;
+            FinalizeLabel.Visibility = Visibility.Visible;
+            FinalizeLabel.Text = "Wardrobe was\r\nsuccessfully\r\ninstalled!";
+            FinalizeErrorMessage.Visibility = Visibility.Hidden;
+            // Go back to the selection frame
+            LauncherSelectFrame.Visibility = Visibility.Visible;
+        }
+
 
         // Logical functions
         public static bool IsUserAdministrator()
@@ -237,6 +300,27 @@ namespace WardrobeInstaller
                     using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
                     {
                         logs.WriteLine("Error - Unknown install location: " + location);
+                    }
+                    return;
+            }
+        }
+
+        private void UninstallWardrobe(int location)
+        {
+            switch (location)
+            {
+                // Optifine
+                case 1:
+                    File.SetAttributes(HOSTS_FILEPATH, FileAttributes.Normal);
+                    var hostsFileContent = File.ReadAllLines(HOSTS_FILEPATH);
+                    var filteredLines = hostsFileContent.Where(line => !line.Contains(HOSTS_INSERT));
+                    File.WriteAllText(HOSTS_FILEPATH, String.Join("\n", filteredLines).Trim() + "\n");
+                    return;
+                default:
+                    MessageBox.Show("Unknown uninstallation location encountered. Please contact Wardrobe Support for more help.", "Wardrobe Installer", MessageBoxButton.OK, MessageBoxImage.Error);
+                    using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+                    {
+                        logs.WriteLine("Error - Unknown uninstall location: " + location);
                     }
                     return;
             }

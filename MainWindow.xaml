@@ -16,7 +16,7 @@
             <Label x:Name="TitleBarMainLabel" Content="WARDROBE INSTALLER" Style="{DynamicResource titleLabel}" Margin="8,2,648,0"/>
             <Button Content="&#xE711;" Style="{DynamicResource windowButton}" Margin="773,0,0,0" Click="CloseButton_Click" HorizontalAlignment="Left" Width="24" Height="24"/>
         </Grid>
-        <Border x:Name="LauncherSelectFrame" Style="{DynamicResource frame}" Visibility="Visible" Margin="64,32,64,0" Grid.RowSpan="3">
+        <Border x:Name="LauncherSelectFrame" Style="{DynamicResource frame}" Visibility="Collapsed" Margin="64,32,64,0" Grid.RowSpan="3">
             <Grid>
                 <TextBlock x:Name="LauncherSelectLabel" Style="{DynamicResource frameLabel}" Margin="0,46,220,299" FontSize="32">
                 Where do you want to
@@ -34,7 +34,7 @@
                 </Border>
             </Grid>
         </Border>
-        <Border x:Name="ConfigureOptifine" Style="{DynamicResource frame}" Visibility="Hidden" Grid.RowSpan="2" Margin="0,0,0,0" Grid.Row="1">
+        <Border x:Name="ConfigureOptifine" Style="{DynamicResource frame}" Visibility="Collapsed" Grid.RowSpan="2" Margin="0,0,0,0" Grid.Row="1">
             <Grid>
                 <Label x:Name="ConfigureOptifineReturnArrow" Style="{DynamicResource returnArrow}" Margin="22,47,754,345" MouseDown="ConfigureOptifineReturnArrow_MouseDown">&#xE26C;</Label>
                 <TextBlock x:Name="ConfigureInstallOptifine" Style="{DynamicResource frameLabel}" Margin="64,46,400,299" FontSize="32">
@@ -64,9 +64,12 @@
                 <Button x:Name="InstallOptifineButton" Margin="0,330,457,0" Style="{DynamicResource installButton}" VerticalAlignment="Top" Width="279" Height="34" Click="InstallOptifineButton_Click">
                     <Label Foreground="White" Margin="0,2,0,0">Install</Label>
                 </Button>
+                <Button x:Name="UninstallOptifineButton" Margin="0,330,163,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="UninstallOptifineButton_Click">
+                    <Label Foreground="White" Margin="0,2,0,0">Uninstall</Label>
+                </Button>
             </Grid>
         </Border>
-        <Border x:Name="FinalizeInstallation" Style="{DynamicResource frame}" Visibility="Hidden" Margin="64,32,64,0" Grid.RowSpan="3">
+        <Border x:Name="FinalizeInstallation" Style="{DynamicResource frame}" Visibility="Visible" Margin="64,32,64,0" Grid.RowSpan="3">
             <Grid>
                 <TextBlock x:Name="FinalizeLabel" Visibility="Visible" Style="{DynamicResource frameLabel}" Margin="0,46,220,276" FontSize="32">
                     Wardrobe was
@@ -89,13 +92,16 @@
                     <LineBreak />
                     on our Discord Server.
                 </TextBlock>
-                <Button x:Name="CloseInstallerButton" Margin="0,325,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="CloseButton_Click">
+                <Button x:Name="CloseInstallerButton" Margin="0,295,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="CloseButton_Click">
                     <Label Foreground="White" Margin="0,4,0,0" FontSize="13">Close Installer</Label>
                 </Button>
                 <!--<Button x:Name="InstallAnotherVersionButton" Margin="0,324,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34">
                     <Label Foreground="White" Margin="0,4,0,0" FontSize="13" Content="Install another version"/>
                 </Button-->
                 <Image Margin="284,0,-57,19" Source="/Assets/Images/flying-person-render.png" Stretch="Fill"/>
+                <Button x:Name="InstallAnotherButton" Margin="0,334,393,0" Style="{DynamicResource secondaryButton}" VerticalAlignment="Top" Width="279" Height="34" Click="InstallAnotherButton_Click">
+                    <Label Foreground="White" Margin="0,4,0,0" FontSize="13" Content="Install another version"/>
+                </Button>
 
             </Grid>
         </Border>
