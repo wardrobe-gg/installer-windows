@@ -46,9 +46,9 @@ jobs:
         with:
           name: "Installer"
 
-      - name: Get Current Date
-        id: date
-        run: echo "tag_name=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      - name: Get Current Date and Time
+        id: datetime
+        run: echo "tag_name=$(date +'%Y-%m-%d-%H%M%S')" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
