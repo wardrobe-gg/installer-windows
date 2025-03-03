@@ -262,7 +262,6 @@ namespace WardrobeInstaller
                             logs.Write(ex + "\n");
                         }
                     }
-                    // Check if the hosts file exists
                     if (!File.Exists(HOSTS_FILEPATH))
                     {
                         using (StreamWriter hosts = File.AppendText(HOSTS_FILEPATH))
@@ -272,18 +271,36 @@ namespace WardrobeInstaller
                         return;
                     }
 
-                    // Unlock the file fron system write-protection
+                    // Unlock the file from system write-protection
                     File.SetAttributes(HOSTS_FILEPATH, FileAttributes.Normal);
 
-                    // Insert to hosts file
-                    using (StreamWriter hosts = File.AppendText(HOSTS_FILEPATH))
+                    try
                     {
-                        hosts.WriteLine();
-                        hosts.WriteLine(HOSTS_INSERT);
-                    }
+                        // Read all lines and filter out any existing s.optifine.net entries
+                        var lines = File.ReadAllLines(HOSTS_FILEPATH)
+                            .Where(line => !line.Contains("s.optifine.net"))
+                            .ToList();
 
-                    // Relock the file
-                    File.SetAttributes(HOSTS_FILEPATH, FileAttributes.ReadOnly | FileAttributes.System);
+                        // Add our new entry
+                        lines.Add(HOSTS_INSERT);
+
+                        // Write all lines back to the file
+                        File.WriteAllLines(HOSTS_FILEPATH, lines);
+                    }
+                    catch (Exception ex)
+                    {
+                        using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
+                        {
+                            logs.WriteLine("Error while updating hosts file:");
+                            logs.Write(ex + "\n");
+                        }
+                        throw; // Re-throw the exception to be caught by the calling method
+                    }
+                    finally
+                    {
+                        // Relock the file
+                        File.SetAttributes(HOSTS_FILEPATH, FileAttributes.ReadOnly | FileAttributes.System);
+                    }
 
                     // End
                     using (StreamWriter logs = File.AppendText(LOG_DIRECTORY + "\\latest.log"))
