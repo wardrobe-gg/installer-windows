@@ -22,7 +22,7 @@ namespace WardrobeInstaller
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly string HOSTS_INSERT = "51.68.220.202 s.optifine.net # INSERTED BY WARDROBE";
+        private static readonly string HOSTS_INSERT = "51.75.145.147 s.optifine.net # INSERTED BY WARDROBE";
         private static readonly string HOSTS_FILEPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
         private static readonly string LOG_DIRECTORY = Environment.GetEnvironmentVariable("APPDATA") + "\\Wardrobe Installer\\logs";
 
